@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearFlow — Automatisez vos tâches répétitives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563EB;
+      --blue-light: #EFF6FF;
+      --blue-dark: #1D4ED8;
+      --dark: #0F172A;
+      --gray: #64748B;
+      --light: #F8FAFC;
+      --border: #E2E8F0;
+      --white: #FFFFFF;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--blue); }
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+    }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+    .btn-outline:hover { background: var(--blue-light); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+    }
+    h1 span { color: var(--blue); }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--gray);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-large { padding: 0.85rem 2rem; font-size: 1rem; border-radius: 10px; }
+
+    /* PAIN */
+    .pain {
+      background: var(--light);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    .pain h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 3rem;
+    }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .pain-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: left;
+    }
+    .pain-card .icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .pain-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .pain-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .how h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 3rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .step {
+      text-align: center;
+    }
+    .step-num {
+      width: 48px;
+      height: 48px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin: 0 auto 1.25rem;
+    }
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    /* OFFERS */
+    .offers {
+      background: var(--light);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .offers h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.75rem;
+    }
+    .offers > p {
+      color: var(--gray);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .offer-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: left;
+      position: relative;
+    }
+    .offer-card.featured {
+      border: 2px solid var(--blue);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .offer-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .offer-price {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    .offer-price span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    .offer-card ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .offer-card li {
+      font-size: 0.9rem;
+      color: var(--gray);
+      padding: 0.3rem 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .offer-card li::before {
+      content: "✓";
+      color: var(--blue);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .offer-card .btn { width: 100%; text-align: center; }
+
+    /* CTA FINAL */
+    .cta-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--gray);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Clear<span>Flow</span></div>
+    <a href="mailto:contact@clearflow.fr" class="btn btn-primary">Audit gratuit →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">⚡ Automatisation IA pour indépendants & PME</div>
+    <h1>Récupérez <span>5 à 10h</span> par semaine sans recruter</h1>
+    <p>ClearFlow automatise vos tâches répétitives avec n8n — prospection, relances, onboarding, reporting. Vos outils existants, connectés intelligemment.</p>
+    <div class="hero-cta">
+      <a href="mailto:contact@clearflow.fr" class="btn btn-primary btn-large">Audit gratuit de 30 min</a>
+      <a href="#offres" class="btn btn-outline btn-large">Voir les offres</a>
+    </div>
+  </section>
+
+  <!-- PAIN -->
+  <section class="pain">
+    <div class="section-label">Le problème</div>
+    <h2>Vous perdez des heures sur des tâches<br/>qui pourraient se faire seules</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="icon">📋</div>
+        <h3>Suivi manuel des leads</h3>
+        <p>Chaque prospect à relancer à la main. Des clients perdus parce qu'on a oublié de les rappeler.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">🔁</div>
+        <h3>Données recopiées d'un outil à l'autre</h3>
+        <p>Formulaire → CRM → email → tableau. Les mêmes informations, 4 fois. À chaque nouveau client.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">📊</div>
+        <h3>Reporting refait chaque semaine</h3>
+        <p>Le lundi matin à compiler des chiffres à la main alors que tout est déjà dans vos outils.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">📨</div>
+        <h3>Onboarding client chronophage</h3>
+        <p>45 minutes d'emails et de liens à envoyer pour chaque nouveau client. Chaque fois pareil.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="section-label">Comment ça marche</div>
+    <h2>Trois étapes, un résultat concret</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Audit de 30 min</h3>
+        <p>On identifie ensemble vos 2-3 tâches les plus chronophages. Gratuit, sans engagement.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Construction du workflow</h3>
+        <p>Je construis les automatisations sur n8n hébergé chez vous. Livraison en 1 à 2 semaines.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Ça tourne seul</h3>
+        <p>Vos outils se parlent automatiquement. Vous récupérez votre temps. On ajuste si besoin.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="offers" id="offres">
+    <div class="section-label">Tarifs</div>
+    <h2>Des offres claires, sans surprise</h2>
+    <p>Prix fixes, livraison garantie sous 2 semaines.</p>
+    <div class="offers-grid">
+      <div class="offer-card">
+        <h3>Workflow Starter</h3>
+        <div class="offer-price">600 € <span>HT</span></div>
+        <ul>
+          <li>1 à 2 automatisations</li>
+          <li>Connexion de vos outils existants</li>
+          <li>Livraison sous 1 semaine</li>
+          <li>Documentation incluse</li>
+        </ul>
+        <a href="mailto:contact@clearflow.fr?subject=Workflow Starter" class="btn btn-outline">En savoir plus</a>
+      </div>
+      <div class="offer-card featured">
+        <div class="featured-badge">Le plus populaire</div>
+        <h3>Système Business</h3>
+        <div class="offer-price">1 500 € <span>HT</span></div>
+        <ul>
+          <li>3 à 5 workflows connectés</li>
+          <li>Prospection + suivi + reporting</li>
+          <li>Livraison sous 2 semaines</li>
+          <li>1 mois de support inclus</li>
+        </ul>
+        <a href="mailto:contact@clearflow.fr?subject=Système Business" class="btn btn-primary">Démarrer →</a>
+      </div>
+      <div class="offer-card">
+        <h3>Maintenance mensuelle</h3>
+        <div class="offer-price">200 € <span>/ mois</span></div>
+        <ul>
+          <li>Monitoring de vos workflows</li>
+          <li>Ajustements illimités</li>
+          <li>1 nouveau workflow / mois</li>
+          <li>Support prioritaire</li>
+        </ul>
+        <a href="mailto:contact@clearflow.fr?subject=Maintenance" class="btn btn-outline">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <h2>Prêt à récupérer vos 5 à 10h par semaine ?</h2>
+    <p>Un audit gratuit de 30 minutes pour identifier ce qui est automatisable chez vous. Aucun engagement.</p>
+    <a href="mailto:contact@clearflow.fr?subject=Audit gratuit" class="btn btn-primary btn-large">Réserver mon audit gratuit →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 ClearFlow — <a href="mailto:contact@clearflow.fr">contact@clearflow.fr</a></p>
+  </footer>
+
+</body>
+</html>
